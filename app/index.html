@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shree Neelkanth Enterprises — Commercial Maintenance & Home Construction</title>
+  <meta name="description" content="Your trusted partner in commercial maintenance & local home construction. Facility management for schools, malls & offices, plus custom home building within 10 km." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy:   { DEFAULT: '#0F172A', 800: '#1E293B', 700: '#334155', 900: '#0B1220' },
+            gold:   { DEFAULT: '#D97706', light: '#F59E0B', soft: '#FEF3C7', pale: '#FFFBEB' },
+            slate2: '#64748B',
+            offwhite: '#F8FAFC'
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            display: ['Montserrat', 'Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* ---------- Custom micro-interactions & animations ---------- */
+    ::selection { background: #D97706; color: #fff; }
+
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: .12s; }
+    .reveal-delay-2 { transition-delay: .24s; }
+    .reveal-delay-3 { transition-delay: .36s; }
+
+    .card-hover { transition: transform .35s cubic-bezier(.22,.61,.36,1), box-shadow .35s; }
+    .card-hover:hover { transform: translateY(-8px); box-shadow: 0 24px 48px -16px rgba(15,23,42,.22); }
+
+    .btn-sheen { position: relative; overflow: hidden; }
+    .btn-sheen::after {
+      content: ''; position: absolute; top: 0; left: -75%; width: 50%; height: 100%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,.35), transparent);
+      transform: skewX(-20deg); transition: left .6s ease;
+    }
+    .btn-sheen:hover::after { left: 130%; }
+
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: ''; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px;
+      background: #D97706; transition: width .3s ease;
+    }
+    .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+    .nav-link.active { color: #D97706 !important; }
+
+    /* Pulsing radar ring for radius map */
+    @keyframes radar {
+      0%   { transform: scale(.35); opacity: .8; }
+      100% { transform: scale(1);   opacity: 0; }
+    }
+    .radar-ring { transform-origin: center; animation: radar 3s ease-out infinite; }
+    .radar-ring.r2 { animation-delay: 1.5s; }
+
+    @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    .floaty { animation: floaty 5s ease-in-out infinite; }
+
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .ticker-track { animation: ticker 28s linear infinite; }
+
+    /* Hero entrance */
+    @keyframes heroUp { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-anim { opacity: 0; animation: heroUp .9s cubic-bezier(.22,.61,.36,1) forwards; }
+    .hero-anim.d1 { animation-delay: .15s; }
+    .hero-anim.d2 { animation-delay: .35s; }
+    .hero-anim.d3 { animation-delay: .55s; }
+
+    input:focus, select:focus, textarea:focus { outline: none; }
+  </style>
+</head>
+
+<body class="font-sans bg-offwhite text-navy antialiased">
+
+  <!-- ======================= A. HEADER / NAVBAR ======================= -->
+  <header id="navbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-300">
+    <nav class="max-w-7xl mx-auto flex items-center justify-between px-5 lg:px-8 py-4">
+      <!-- Logo -->
+      <a href="#home" class="flex items-center gap-3 group">
+        <span class="w-11 h-11 rounded-xl bg-gold flex items-center justify-center shadow-lg shadow-gold/30 transition-transform duration-300 group-hover:rotate-6">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/>
+            <rect x="15" y="8" width="5" height="5" rx="0.5"/><rect x="9.5" y="14" width="5" height="6"/>
+          </svg>
+        </span>
+        <span class="leading-tight">
+          <span class="block font-display font-800 font-extrabold tracking-tight text-white text-lg">Shree Neelkanth</span>
+          <span class="block text-[11px] font-semibold tracking-[0.3em] uppercase text-gold-light">Enterprises</span>
+        </span>
+      </a>
+
+      <!-- Desktop links -->
+      <ul class="hidden lg:flex items-center gap-8 text-sm font-semibold text-slate-200">
+        <li><a href="#home" class="nav-link hover:text-gold-light transition-colors" data-nav>Home</a></li>
+        <li><a href="#about" class="nav-link hover:text-gold-light transition-colors" data-nav>About Us</a></li>
+        <li><a href="#services" class="nav-link hover:text-gold-light transition-colors" data-nav>Services</a></li>
+        <li><a href="#coverage" class="nav-link hover:text-gold-light transition-colors" data-nav>Service Radius</a></li>
+        <li><a href="#contact" class="nav-link hover:text-gold-light transition-colors" data-nav>Contact Us</a></li>
+      </ul>
+
+      <!-- CTA + burger -->
+      <div class="flex items-center gap-3">
+        <a href="#contact" class="btn-sheen hidden sm:inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-navy font-display font-bold text-sm px-5 py-2.5 rounded-full shadow-lg shadow-gold/30 transition-all duration-300 hover:-translate-y-0.5">
+          Get a Free Quote
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <button id="menuBtn" class="lg:hidden w-11 h-11 rounded-xl bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center text-white" aria-label="Open menu">
+          <svg id="menuIconOpen" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg id="menuIconClose" class="hidden" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="lg:hidden hidden mx-4 mb-4 rounded-2xl bg-navy-800/95 backdrop-blur border border-white/10 shadow-2xl overflow-hidden">
+      <ul class="p-4 space-y-1 text-slate-200 font-semibold">
+        <li><a href="#home" class="block px-4 py-3 rounded-xl hover:bg-white/10 hover:text-gold-light transition" data-nav>Home</a></li>
+        <li><a href="#about" class="block px-4 py-3 rounded-xl hover:bg-white/10 hover:text-gold-light transition" data-nav>About Us</a></li>
+        <li><a href="#services" class="block px-4 py-3 rounded-xl hover:bg-white/10 hover:text-gold-light transition" data-nav>Services</a></li>
+        <li><a href="#coverage" class="block px-4 py-3 rounded-xl hover:bg-white/10 hover:text-gold-light transition" data-nav>Service Radius</a></li>
+        <li><a href="#contact" class="block px-4 py-3 rounded-xl hover:bg-white/10 hover:text-gold-light transition" data-nav>Contact Us</a></li>
+        <li class="pt-2"><a href="#contact" class="block text-center bg-gold text-navy font-display font-bold px-4 py-3 rounded-xl">Get a Free Quote</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- ======================= B. HERO ======================= -->
+  <section id="home" class="relative min-h-screen flex items-center overflow-hidden">
+    <img src="assets/hero-bg.png" alt="Modern commercial complex beside a newly built residential home at dusk"
+         class="absolute inset-0 w-full h-full object-cover" />
+    <div class="absolute inset-0 bg-gradient-to-r from-navy-900/95 via-navy-900/80 to-navy-900/35"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-navy-900/90 via-transparent to-navy-900/40"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-5 lg:px-8 pt-32 pb-24 w-full">
+      <div class="max-w-2xl">
+        <span class="hero-anim inline-flex items-center gap-2 text-gold-light text-xs font-bold tracking-[0.25em] uppercase border border-gold/40 bg-gold/10 rounded-full px-4 py-2 mb-7">
+          <span class="w-2 h-2 rounded-full bg-gold-light animate-pulse"></span>
+          Local Expertise · Commercial & Residential
+        </span>
+        <h1 class="hero-anim d1 font-display font-extrabold text-white text-4xl sm:text-5xl lg:text-[3.75rem] leading-[1.08] tracking-tight">
+          Building Foundations.<br />
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-light to-gold">Maintaining Excellence.</span>
+        </h1>
+        <p class="hero-anim d2 mt-6 text-lg text-slate-300 leading-relaxed max-w-xl">
+          Expert commercial maintenance for schools &amp; malls, plus custom residential house
+          construction within 10 km. One trusted local partner — from blueprint to upkeep.
+        </p>
+        <div class="hero-anim d3 mt-9 flex flex-wrap gap-4">
+          <a href="#services" class="btn-sheen inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-navy font-display font-bold px-7 py-3.5 rounded-full shadow-xl shadow-gold/30 transition-all duration-300 hover:-translate-y-1">
+            Explore Our Services
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#contact" class="inline-flex items-center gap-2 border-2 border-white/30 hover:border-gold-light text-white hover:text-gold-light font-display font-bold px-7 py-3.5 rounded-full backdrop-blur transition-all duration-300 hover:-translate-y-1">
+            Request a Quote
+          </a>
+        </div>
+
+        <!-- Stats strip -->
+        <div class="hero-anim d3 mt-14 grid grid-cols-3 max-w-md gap-6 text-white">
+          <div><p class="font-display font-extrabold text-2xl sm:text-3xl text-gold-light" data-count="120">0</p><p class="text-xs text-slate-300 mt-1 tracking-wide uppercase">Projects Delivered</p></div>
+          <div><p class="font-display font-extrabold text-2xl sm:text-3xl text-gold-light" data-count="15">0</p><p class="text-xs text-slate-300 mt-1 tracking-wide uppercase">Years Experience</p></div>
+          <div><p class="font-display font-extrabold text-2xl sm:text-3xl text-gold-light"><span data-count="10">0</span>&nbsp;km</p><p class="text-xs text-slate-300 mt-1 tracking-wide uppercase">Service Radius</p></div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#about" class="absolute bottom-7 left-1/2 -translate-x-1/2 text-white/60 hover:text-gold-light transition floaty" aria-label="Scroll down">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+    </a>
+  </section>
+
+  <!-- Marquee strip -->
+  <div class="bg-gold py-3 overflow-hidden">
+    <div class="ticker-track flex whitespace-nowrap gap-10 font-display font-bold text-navy text-sm tracking-wide uppercase w-max">
+      <span class="flex gap-10">
+        <span>Facility Management</span><span>·</span><span>Structural Repairs</span><span>·</span><span>Electrical &amp; Plumbing</span><span>·</span><span>Custom Home Construction</span><span>·</span><span>Preventive Upkeep</span><span>·</span><span>Site Supervision</span><span>·</span>
+      </span>
+      <span class="flex gap-10" aria-hidden="true">
+        <span>Facility Management</span><span>·</span><span>Structural Repairs</span><span>·</span><span>Electrical &amp; Plumbing</span><span>·</span><span>Custom Home Construction</span><span>·</span><span>Preventive Upkeep</span><span>·</span><span>Site Supervision</span><span>·</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- ======================= C. ABOUT US ======================= -->
+  <section id="about" class="py-24 bg-offwhite">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-14 items-center">
+        <!-- Left: visual composition -->
+        <div class="reveal relative">
+          <div class="absolute -top-6 -left-6 w-40 h-40 rounded-3xl bg-gold/15 -z-0"></div>
+          <div class="relative rounded-3xl overflow-hidden shadow-2xl shadow-navy/20">
+            <img src="assets/hero-bg.png" alt="Our work: commercial property care and residential construction" class="w-full h-[420px] object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-navy/80 to-transparent"></div>
+            <div class="absolute bottom-5 left-5 right-5 flex items-center justify-between">
+              <p class="text-white font-display font-bold">Commercial Care + Home Building</p>
+              <span class="bg-gold text-navy text-xs font-bold px-3 py-1.5 rounded-full">Est. Local</span>
+            </div>
+          </div>
+          <div class="absolute -bottom-8 -right-4 sm:right-8 bg-white rounded-2xl shadow-xl shadow-navy/15 px-6 py-5 flex items-center gap-4 card-hover">
+            <span class="w-12 h-12 rounded-xl bg-gold-soft flex items-center justify-center">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v6c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+            </span>
+            <div>
+              <p class="font-display font-extrabold text-navy text-xl">100% Accountable</p>
+              <p class="text-slate2 text-sm">One team, start to finish</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: copy + pillars -->
+        <div>
+          <p class="reveal text-gold font-bold text-sm tracking-[0.25em] uppercase">About Us</p>
+          <h2 class="reveal reveal-delay-1 font-display font-extrabold text-3xl sm:text-4xl text-navy mt-3 leading-tight">
+            A Premier Local Contractor &amp; Commercial Maintenance Provider
+          </h2>
+          <p class="reveal reveal-delay-2 text-slate2 mt-5 leading-relaxed">
+            Shree Neelkanth Enterprises is built on a simple promise: treat every property like our own.
+            We maintain schools, malls and commercial complexes to the highest standard — and we build
+            quality homes for families right here in our community. Local roots mean we answer fast,
+            supervise daily, and stand behind every job we complete.
+          </p>
+
+          <div class="mt-9 space-y-5">
+            <div class="reveal flex gap-5 p-5 rounded-2xl bg-white shadow-sm border border-slate-100 card-hover">
+              <span class="shrink-0 w-12 h-12 rounded-xl bg-navy flex items-center justify-center">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v6c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/></svg>
+              </span>
+              <div>
+                <h3 class="font-display font-bold text-navy">Reliability</h3>
+                <p class="text-slate2 text-sm mt-1">Dependable crews and accountable timelines — when we commit, we deliver.</p>
+              </div>
+            </div>
+            <div class="reveal reveal-delay-1 flex gap-5 p-5 rounded-2xl bg-white shadow-sm border border-slate-100 card-hover">
+              <span class="shrink-0 w-12 h-12 rounded-xl bg-navy flex items-center justify-center">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4L15 12l-3-3z"/></svg>
+              </span>
+              <div>
+                <h3 class="font-display font-bold text-navy">Quality Craftsmanship</h3>
+                <p class="text-slate2 text-sm mt-1">Skilled engineers and craftsmen using proven methods and durable materials.</p>
+              </div>
+            </div>
+            <div class="reveal reveal-delay-2 flex gap-5 p-5 rounded-2xl bg-white shadow-sm border border-slate-100 card-hover">
+              <span class="shrink-0 w-12 h-12 rounded-xl bg-navy flex items-center justify-center">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+              </span>
+              <div>
+                <h3 class="font-display font-bold text-navy">On-Time Delivery</h3>
+                <p class="text-slate2 text-sm mt-1">Tight scheduling and daily site supervision keep every project on track.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= D. CORE SERVICES ======================= -->
+  <section id="services" class="py-24 bg-navy relative overflow-hidden">
+    <div class="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-gold/5 blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-gold/5 blur-3xl pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-5 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto">
+        <p class="reveal text-gold-light font-bold text-sm tracking-[0.25em] uppercase">Our Services</p>
+        <h2 class="reveal reveal-delay-1 font-display font-extrabold text-3xl sm:text-4xl text-white mt-3">
+          Two Specialities. One Standard of Excellence.
+        </h2>
+        <p class="reveal reveal-delay-2 text-slate-400 mt-4">From institutional upkeep to dream homes — every service delivered with local accountability.</p>
+      </div>
+
+      <div class="mt-14 grid md:grid-cols-2 gap-8">
+        <!-- Card 1 -->
+        <div class="reveal group rounded-3xl bg-navy-800 border border-white/10 p-8 sm:p-10 card-hover hover:border-gold/50">
+          <div class="flex items-start justify-between">
+            <span class="w-16 h-16 rounded-2xl bg-gradient-to-br from-gold to-gold-light flex items-center justify-center shadow-lg shadow-gold/30 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="7" width="13" height="14" rx="1"/><path d="M16 11h5v10h-5"/><path d="M7 11h2M7 15h2M7 19h2M12 11h0M12 15h0"/>
+              </svg>
+            </span>
+            <span class="text-xs font-bold tracking-widest uppercase text-gold-light border border-gold/40 rounded-full px-3 py-1.5">Service 01</span>
+          </div>
+          <h3 class="font-display font-extrabold text-2xl text-white mt-7">Commercial &amp; Institutional Maintenance</h3>
+          <p class="text-gold-light/90 text-sm font-semibold mt-2 tracking-wide">For Schools · Malls · Shopping Centers · Office Complexes</p>
+          <ul class="mt-6 space-y-3 text-slate-300 text-[15px]">
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Full-scale facility management &amp; operations</li>
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Structural repairs &amp; civil works</li>
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Electrical &amp; plumbing maintenance</li>
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Periodic inspections &amp; preventive upkeep</li>
+          </ul>
+          <a href="#contact" class="mt-8 inline-flex items-center gap-2 text-gold-light font-display font-bold group/link">
+            Request Maintenance Plan
+            <svg class="transition-transform duration-300 group-hover/link:translate-x-1.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="reveal reveal-delay-1 group rounded-3xl bg-navy-800 border border-white/10 p-8 sm:p-10 card-hover hover:border-gold/50">
+          <div class="flex items-start justify-between">
+            <span class="w-16 h-16 rounded-2xl bg-gradient-to-br from-gold to-gold-light flex items-center justify-center shadow-lg shadow-gold/30 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><rect x="10" y="14" width="4" height="6"/>
+              </svg>
+            </span>
+            <span class="text-xs font-bold tracking-widest uppercase text-gold-light border border-gold/40 rounded-full px-3 py-1.5">Service 02</span>
+          </div>
+          <h3 class="font-display font-extrabold text-2xl text-white mt-7">Residential Construction <span class="text-gold-light">(City‑wide service coverage in Delhi)</span></h3>
+          <p class="text-gold-light/90 text-sm font-semibold mt-2 tracking-wide">For Home Buyers · Landowners · Residential Plots</p>
+          <ul class="mt-6 space-y-3 text-slate-300 text-[15px]">
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>End-to-end home building, foundation to finish</li>
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Custom modern architectural designs</li>
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Transparent staged billing &amp; material quality checks</li>
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Daily local site supervision within a 10 km zone</li>
+          </ul>
+          <a href="#contact" class="mt-8 inline-flex items-center gap-2 text-gold-light font-display font-bold group/link">
+            Start Your Home Project
+            <svg class="transition-transform duration-300 group-hover/link:translate-x-1.5" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= E. COVERAGE / RADIUS MAP ======================= -->
+  <section id="coverage" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-14 items-center">
+        <!-- Map visual -->
+        <div class="reveal order-2 lg:order-1">
+          <div class="relative rounded-3xl bg-gradient-to-br from-navy to-navy-800 p-6 sm:p-10 shadow-2xl shadow-navy/25 overflow-hidden">
+            <!-- stylised street grid -->
+            <svg class="absolute inset-0 w-full h-full opacity-[0.08]" xmlns="http://www.w3.org/2000/svg">
+              <defs><pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M44 0H0v44" fill="none" stroke="white" stroke-width="1"/></pattern></defs>
+              <rect width="100%" height="100%" fill="url(#grid)"/>
+            </svg>
+            <div class="relative aspect-square max-w-[460px] mx-auto">
+              <svg viewBox="0 0 400 400" class="w-full h-full">
+                <defs>
+                  <radialGradient id="zone" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#D97706" stop-opacity="0.35"/>
+                    <stop offset="70%" stop-color="#D97706" stop-opacity="0.12"/>
+                    <stop offset="100%" stop-color="#D97706" stop-opacity="0.05"/>
+                  </radialGradient>
+                </defs>
+                <!-- radar rings -->
+                <circle class="radar-ring" cx="200" cy="200" r="150" fill="none" stroke="#F59E0B" stroke-width="1.5"/>
+                <circle class="radar-ring r2" cx="200" cy="200" r="150" fill="none" stroke="#F59E0B" stroke-width="1.5"/>
+                <!-- 10 km zone -->
+                <circle cx="200" cy="200" r="150" fill="url(#zone)" stroke="#D97706" stroke-width="2" stroke-dasharray="8 6"/>
+                <!-- inner 5 km reference -->
+                <circle cx="200" cy="200" r="75" fill="none" stroke="#64748B" stroke-width="1" stroke-dasharray="4 6" opacity="0.7"/>
+                <!-- radius line -->
+                <line x1="200" y1="200" x2="330" y2="95" stroke="#F59E0B" stroke-width="1.5"/>
+                <!-- scale labels -->
+                <text x="352" y="80" fill="#F59E0B" font-size="15" font-weight="700" font-family="Montserrat">10 km</text>
+                <text x="252" y="160" fill="#94A3B8" font-size="11" font-family="Inter">5 km</text>
+                <!-- office pin -->
+                <g class="floaty">
+                  <circle cx="200" cy="200" r="26" fill="#D97706" opacity="0.25"/>
+                  <circle cx="200" cy="200" r="13" fill="#D97706" stroke="#FFFBEB" stroke-width="3"/>
+                  <circle cx="200" cy="200" r="4" fill="#0F172A"/>
+                </g>
+                <text x="200" y="245" text-anchor="middle" fill="#F8FAFC" font-size="12" font-weight="700" font-family="Montserrat">OUR OFFICE</text>
+                <!-- sample site pins -->
+                <g fill="#94A3B8">
+                  <circle cx="120" cy="120" r="4"/><circle cx="300" cy="270" r="4"/><circle cx="255" cy="110" r="4"/>
+                  <circle cx="95" cy="265" r="4"/><circle cx="180" cy="320" r="4"/>
+                </g>
+                <g fill="#64748B" font-size="10" font-family="Inter">
+                  <text x="108" y="106">Site</text><text x="288" y="256">Site</text><text x="243" y="96">Site</text>
+                  <text x="83" y="251">Site</text><text x="168" y="306">Site</text>
+                </g>
+              </svg>
+            </div>
+            <div class="relative mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-slate-400">
+              <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-gold"></span> Head Office</span>
+              <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-slate-400"></span> Supervised Sites</span>
+              <span class="flex items-center gap-2"><span class="w-6 border-t-2 border-dashed border-gold"></span> 10 km Construction Zone</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Copy -->
+        <div class="order-1 lg:order-2">
+          <p class="reveal text-gold font-bold text-sm tracking-[0.25em] uppercase">Service Radius</p>
+          <h2 class="reveal reveal-delay-1 font-display font-extrabold text-3xl sm:text-4xl text-navy mt-3 leading-tight">
+            Focused Construction Expertise within 10 KM
+          </h2>
+          <p class="reveal reveal-delay-2 text-slate2 mt-5 leading-relaxed">
+            We strictly prioritize residential construction projects within 10 km of our office to
+            guarantee hands-on quality control and daily site supervision. Staying close means we can be
+            on-site within minutes — checking materials, resolving issues, and keeping your build on schedule.
+          </p>
+          <div class="reveal reveal-delay-3 mt-8 grid sm:grid-cols-2 gap-4">
+            <div class="rounded-2xl border border-slate-200 bg-offwhite p-5 card-hover">
+              <p class="font-display font-extrabold text-2xl text-gold">Daily</p>
+              <p class="text-slate2 text-sm mt-1">On-site supervision for every residential build</p>
+            </div>
+            <div class="rounded-2xl border border-slate-200 bg-offwhite p-5 card-hover">
+              <p class="font-display font-extrabold text-2xl text-gold">&lt; 20 min</p>
+              <p class="text-slate2 text-sm mt-1">Response time from office to any project site</p>
+            </div>
+          </div>
+          <a href="#contact" class="reveal reveal-delay-3 mt-8 inline-flex items-center gap-2 bg-navy hover:bg-navy-800 text-white font-display font-bold px-7 py-3.5 rounded-full transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-navy/25">
+            Check If Your Plot Qualifies
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= F. WHY CHOOSE US ======================= -->
+  <section id="why" class="py-24 bg-gold-pale">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto">
+        <p class="reveal text-gold font-bold text-sm tracking-[0.25em] uppercase">Why Choose Us</p>
+        <h2 class="reveal reveal-delay-1 font-display font-extrabold text-3xl sm:text-4xl text-navy mt-3">
+          The Local Advantage You Can See
+        </h2>
+      </div>
+
+      <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="reveal group bg-white rounded-3xl p-7 border border-amber-100 card-hover">
+          <span class="w-14 h-14 rounded-2xl bg-navy flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.4-7-11a7 7 0 0 1 14 0c0 5.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          </span>
+          <h3 class="font-display font-bold text-lg text-navy mt-5">Local Office Proximity</h3>
+          <p class="text-slate2 text-sm mt-2 leading-relaxed">Our 10 km focus ensures fast execution and direct oversight on every single project.</p>
+        </div>
+        <div class="reveal reveal-delay-1 group bg-white rounded-3xl p-7 border border-amber-100 card-hover">
+          <span class="w-14 h-14 rounded-2xl bg-navy flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4L15 12l-3-3z"/></svg>
+          </span>
+          <h3 class="font-display font-bold text-lg text-navy mt-5">Experienced Craftsmen</h3>
+          <p class="text-slate2 text-sm mt-2 leading-relaxed">Skilled engineers and dedicated maintenance crews with years of proven field experience.</p>
+        </div>
+        <div class="reveal reveal-delay-2 group bg-white rounded-3xl p-7 border border-amber-100 card-hover">
+          <span class="w-14 h-14 rounded-2xl bg-navy flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14h6M9 10h6M6 3h12a1 1 0 0 1 1 1v17l-3-2-3 2-3-2-3 2V4a1 1 0 0 1 1-1z"/></svg>
+          </span>
+          <h3 class="font-display font-bold text-lg text-navy mt-5">Transparent Pricing</h3>
+          <p class="text-slate2 text-sm mt-2 leading-relaxed">Clear, itemised estimates with zero hidden costs — you approve every rupee before work begins.</p>
+        </div>
+        <div class="reveal reveal-delay-3 group bg-white rounded-3xl p-7 border border-amber-100 card-hover">
+          <span class="w-14 h-14 rounded-2xl bg-navy flex items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3.5"/></svg>
+          </span>
+          <h3 class="font-display font-bold text-lg text-navy mt-5">End-to-End Execution</h3>
+          <p class="text-slate2 text-sm mt-2 leading-relaxed">From structural planning to post-construction maintenance — one partner for the full lifecycle.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= G. CONTACT / LEAD FORM ======================= -->
+  <section id="contact" class="py-24 bg-navy relative overflow-hidden">
+    <div class="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-gold/10 blur-3xl pointer-events-none"></div>
+    <div class="relative max-w-7xl mx-auto px-5 lg:px-8">
+      <div class="grid lg:grid-cols-5 gap-12">
+        <!-- Left copy -->
+        <div class="lg:col-span-2">
+          <p class="reveal text-gold-light font-bold text-sm tracking-[0.25em] uppercase">Contact Us</p>
+          <h2 class="reveal reveal-delay-1 font-display font-extrabold text-3xl sm:text-4xl text-white mt-3 leading-tight">
+            Get a Free Consultation Today
+          </h2>
+          <p class="reveal reveal-delay-2 text-slate-400 mt-5 leading-relaxed">
+            Tell us about your property or plot, and our team will get back to you within one working
+            day with a clear, no-obligation estimate.
+          </p>
+
+          <div class="mt-9 space-y-5">
+            <a href="tel:+917836900101 +919871073701" class="reveal flex items-center gap-4 group">
+              <span class="w-12 h-12 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center group-hover:bg-gold transition-colors duration-300">
+                <svg class="text-gold-light group-hover:text-navy transition-colors" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.7a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2z"/></svg>
+              </span>
+              <div><p class="text-slate-400 text-xs uppercase tracking-widest">Call Us Now</p><p class="text-white font-semibold">+91 7836900101 , +91 9871073701</p></div>
+            </a>
+            <a href="mailto:contact@shreeneelkanth.in" class="reveal reveal-delay-1 flex items-center gap-4 group">
+              <span class="w-12 h-12 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center group-hover:bg-gold transition-colors duration-300">
+                <svg class="text-gold-light group-hover:text-navy transition-colors" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+              </span>
+              <div><p class="text-slate-400 text-xs uppercase tracking-widest">Email</p><p class="text-white font-semibold">contact@shreeneelkanth.in</p></div>
+            </a>
+            <div class="reveal reveal-delay-2 flex items-center gap-4">
+              <span class="w-12 h-12 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center">
+                <svg class="text-gold-light" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.4-7-11a7 7 0 0 1 14 0c0 5.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+              </span>
+              <div><p class="text-slate-400 text-xs uppercase tracking-widest">Office</p><p class="text-white font-semibold">Shree Neelkanth Enterprises, RZ/B-18, Nihal Vihar, Opp. Paschim Vihar, Delhi-41</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="lg:col-span-3">
+          <form id="leadForm" novalidate class="reveal reveal-delay-1 bg-white rounded-3xl p-7 sm:p-10 shadow-2xl shadow-black/30">
+            <h3 class="font-display font-extrabold text-2xl text-navy">Request Your Free Quote</h3>
+            <p class="text-slate2 text-sm mt-1.5">Fill in the details below — we respond within 24 hours.</p>
+
+            <div class="mt-7 grid sm:grid-cols-2 gap-5">
+              <div>
+                <label for="fName" class="block text-sm font-semibold text-navy mb-1.5">Name <span class="text-gold">*</span></label>
+                <input id="fName" name="name" type="text" placeholder="Your full name"
+                  class="w-full rounded-xl border border-slate-300 px-4 py-3 text-navy placeholder-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/30 transition" />
+                <p class="err hidden text-xs text-red-500 mt-1.5">Please enter your name.</p>
+              </div>
+              <div>
+                <label for="fContact" class="block text-sm font-semibold text-navy mb-1.5">Phone Number / Email <span class="text-gold">*</span></label>
+                <input id="fContact" name="contact" type="text" placeholder="e.g. 7836900101 9871073701"
+                  class="w-full rounded-xl border border-slate-300 px-4 py-3 text-navy placeholder-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/30 transition" />
+                <p class="err hidden text-xs text-red-500 mt-1.5">Please enter a valid phone number or email.</p>
+              </div>
+              <div>
+                <label for="fService" class="block text-sm font-semibold text-navy mb-1.5">Service Needed <span class="text-gold">*</span></label>
+                <select id="fService" name="service"
+                  class="w-full rounded-xl border border-slate-300 px-4 py-3 text-navy bg-white focus:border-gold focus:ring-2 focus:ring-gold/30 transition">
+                  <option value="">Select a service…</option>
+                  <option value="commercial">Commercial Maintenance</option>
+                  <option value="residential">Residential Construction</option>
+                </select>
+                <p class="err hidden text-xs text-red-500 mt-1.5">Please choose a service.</p>
+              </div>
+              <div>
+                <label for="fLocation" class="block text-sm font-semibold text-navy mb-1.5">Location / Site Address</label>
+                <input id="fLocation" name="location" type="text" placeholder="Area, landmark or full address"
+                  class="w-full rounded-xl border border-slate-300 px-4 py-3 text-navy placeholder-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/30 transition" />
+              </div>
+              <div class="sm:col-span-2">
+                <label for="fMessage" class="block text-sm font-semibold text-navy mb-1.5">Message / Requirements</label>
+                <textarea id="fMessage" name="message" rows="4" placeholder="Tell us about your project — size, timeline, budget range…"
+                  class="w-full rounded-xl border border-slate-300 px-4 py-3 text-navy placeholder-slate-400 focus:border-gold focus:ring-2 focus:ring-gold/30 transition resize-none"></textarea>
+              </div>
+            </div>
+
+            <button type="submit"
+              class="btn-sheen mt-7 w-full inline-flex items-center justify-center gap-2 bg-gold hover:bg-gold-light text-navy font-display font-extrabold text-base px-7 py-4 rounded-xl shadow-lg shadow-gold/30 transition-all duration-300 hover:-translate-y-0.5">
+              Get Free Consultation
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+
+            <!-- success state -->
+            <div id="formSuccess" class="hidden mt-6 rounded-xl bg-green-50 border border-green-200 px-5 py-4 flex items-start gap-3">
+              <svg class="shrink-0 mt-0.5" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.5 2.5 4.5-5.5"/></svg>
+              <div>
+                <p class="font-bold text-green-700 text-sm">Thank you! Your request has been noted.</p>
+                <p class="text-green-600 text-sm mt-0.5">Our team will call you within one working day to schedule your free consultation.</p>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= H. FOOTER ======================= -->
+  <footer class="bg-navy-900 border-t border-white/10 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-5 lg:px-8">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <!-- Brand -->
+        <div>
+          <div class="flex items-center gap-3">
+            <span class="w-10 h-10 rounded-xl bg-gold flex items-center justify-center">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F172A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/><rect x="15" y="8" width="5" height="5" rx="0.5"/><rect x="9.5" y="14" width="5" height="6"/></svg>
+            </span>
+            <span class="leading-tight">
+              <span class="block font-display font-extrabold text-white">Shree Neelkanth</span>
+              <span class="block text-[10px] font-semibold tracking-[0.3em] uppercase text-gold-light">Enterprises</span>
+            </span>
+          </div>
+          <p class="text-slate-400 text-sm mt-5 leading-relaxed">
+            Your trusted partner in commercial maintenance &amp; local home construction —
+            serving schools, malls, offices and homeowners within our community.
+          </p>
+        </div>
+
+        <!-- Quick links -->
+        <div>
+          <h4 class="font-display font-bold text-white text-sm tracking-widest uppercase">Quick Links</h4>
+          <ul class="mt-5 space-y-3 text-slate-400 text-sm">
+            <li><a href="#home" class="hover:text-gold-light transition-colors">Home</a></li>
+            <li><a href="#about" class="hover:text-gold-light transition-colors">About Us</a></li>
+            <li><a href="#services" class="hover:text-gold-light transition-colors">Services</a></li>
+            <li><a href="#coverage" class="hover:text-gold-light transition-colors">Service Radius</a></li>
+            <li><a href="#contact" class="hover:text-gold-light transition-colors">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <!-- Services -->
+        <div>
+          <h4 class="font-display font-bold text-white text-sm tracking-widest uppercase">Services</h4>
+          <ul class="mt-5 space-y-3 text-slate-400 text-sm">
+            <li>Commercial &amp; Institutional Maintenance</li>
+            <li>Facility Management</li>
+            <li>Electrical &amp; Plumbing Upkeep</li>
+            <li>Residential Home Construction</li>
+            <li>Custom Architectural Design</li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <h4 class="font-display font-bold text-white text-sm tracking-widest uppercase">Contact</h4>
+          <ul class="mt-5 space-y-4 text-slate-400 text-sm">
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5 text-gold-light" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.7a2 2 0 0 1-.5 2.1L8 9.7a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.7.6a2 2 0 0 1 1.7 2z"/></svg><a href="tel:+917836900101 +919871073701" class="hover:text-gold-light transition-colors">+91 78369 00101</a> | <a href="tel:+919871073701" class="hover:text-gold-light transition-colors">+91 98710 73701</a></li>
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5 text-gold-light" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg><a href="mailto:contact@shreeneelkanth.in" class="hover:text-gold-light transition-colors">contact@shreeneelkanth.in</a></li>
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5 text-gold-light" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.4-7-11a7 7 0 0 1 14 0c0 5.6-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Shree Neelkanth Enterprises, RZ/B-18, Nihal Vihar, Opp. Paschim Vihar, Delhi-41</li>
+            <li class="flex gap-3"><svg class="shrink-0 mt-0.5 text-gold-light" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>Mon – Sun: 9:00 AM – 9:00 PM</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-12 pt-7 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+        <p>© <span id="year"></span> Shree Neelkanth Enterprises. All rights reserved.</p>
+        <p>Building Foundations · Maintaining Excellence</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <button id="toTop" aria-label="Back to top"
+    class="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-gold text-navy shadow-xl shadow-gold/40 flex items-center justify-center opacity-0 translate-y-4 pointer-events-none transition-all duration-300 hover:bg-gold-light">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+  </button>
+
+  <script>
+    /* ---------- Navbar: glass on scroll ---------- */
+    const navbar = document.getElementById('navbar');
+    const setNav = () => {
+      const scrolled = window.scrollY > 40;
+      navbar.classList.toggle('bg-navy-900/90', scrolled);
+      navbar.classList.toggle('backdrop-blur-md', scrolled);
+      navbar.classList.toggle('shadow-lg', scrolled);
+      navbar.classList.toggle('shadow-black/20', scrolled);
+    };
+    setNav();
+    window.addEventListener('scroll', setNav, { passive: true });
+
+    /* ---------- Mobile menu ---------- */
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const iconOpen = document.getElementById('menuIconOpen');
+    const iconClose = document.getElementById('menuIconClose');
+    menuBtn.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('hidden');
+      iconOpen.classList.toggle('hidden', !open);
+      iconClose.classList.toggle('hidden', open);
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      iconOpen.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+    }));
+
+    /* ---------- Scroll reveal ---------- */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    /* ---------- Animated counters ---------- */
+    const counterIO = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        counterIO.unobserve(e.target);
+        const target = +e.target.dataset.count, dur = 1400, t0 = performance.now();
+        const tick = now => {
+          const p = Math.min((now - t0) / dur, 1);
+          e.target.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + (p === 1 ? '+' : '');
+        };
+        requestAnimationFrame(function loop(now) { tick(now); if (now - t0 < dur) requestAnimationFrame(loop); });
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('[data-count]').forEach(el => counterIO.observe(el));
+
+    /* ---------- Active nav link on scroll ---------- */
+    const sections = ['home', 'about', 'services', 'coverage', 'contact'];
+    const navLinks = document.querySelectorAll('#navbar .nav-link');
+    const spy = () => {
+      let current = 'home';
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= 120) current = id;
+      });
+      navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+    };
+    window.addEventListener('scroll', spy, { passive: true });
+    spy();
+
+    /* ---------- Back to top ---------- */
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => {
+      const show = window.scrollY > 600;
+      toTop.classList.toggle('opacity-0', !show);
+      toTop.classList.toggle('translate-y-4', !show);
+      toTop.classList.toggle('pointer-events-none', !show);
+    }, { passive: true });
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    /* ---------- Lead form validation ---------- */
+    const form = document.getElementById('leadForm');
+    const showErr = (input, show) => {
+      const err = input.closest('div').querySelector('.err');
+      if (err) err.classList.toggle('hidden', !show);
+      input.classList.toggle('border-red-400', show);
+      input.classList.toggle('focus:ring-red-300', show);
+    };
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = document.getElementById('fName');
+      const contact = document.getElementById('fContact');
+      const service = document.getElementById('fService');
+      const contactOK = /(^[\w.+-]+@[\w-]+\.[\w.]+$)|(^\+?[\d\s-]{8,15}$)/.test(contact.value.trim());
+      let ok = true;
+      if (!name.value.trim()) { showErr(name, true); ok = false; } else showErr(name, false);
+      if (!contactOK) { showErr(contact, true); ok = false; } else showErr(contact, false);
+      if (!service.value) { showErr(service, true); ok = false; } else showErr(service, false);
+      if (!ok) return;
+      form.reset();
+      const success = document.getElementById('formSuccess');
+      success.classList.remove('hidden');
+      success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      setTimeout(() => success.classList.add('hidden'), 8000);
+    });
+
+    /* ---------- Footer year ---------- */
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
